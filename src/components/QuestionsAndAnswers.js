@@ -21,6 +21,17 @@ class QuestionsAndAnswers extends React.Component{
 
     }
 
+    decrementHandler = (e) =>{
+        
+        if(e.target.accessKey>1){const row = parseInt(e.target.accessKey);
+        const ans = this.state.answers;
+        delete ans[row]
+        this.id = this.id-1
+        this.setState({answers:ans})
+        this.setState({addNpublish: false})
+    }
+    }
+
     onInputChange = (e) => {
         const key = e.target.accessKey
         this.setState({answers: {...this.state.answers, [key]:e.target.value}})
@@ -66,7 +77,7 @@ class QuestionsAndAnswers extends React.Component{
                             aria-label="Amount (to the nearest dollar)" />
                         <div className="input-group-append">
                             <span key ={key} onClick={this.incrementHandler} className={`input-group-text ${this.state.addNpublish?"disable":""}`}>+</span>
-                            <span className="input-group-text">-</span>
+                            <span accessKey ={key} onClick={this.decrementHandler}className="input-group-text">-</span>
                         </div>
                     </div>  )
                     }
