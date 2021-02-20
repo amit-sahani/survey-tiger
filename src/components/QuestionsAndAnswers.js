@@ -79,7 +79,7 @@ class QuestionsAndAnswers extends React.Component{
                                                 this.setState({add:true})
                                             }} 
                                 className="tiny ui button">Add Question</button>
-                        <button type='submit' 
+                        <button type="submit" 
                                 onClick ={() => {this.setState({publish:true})}} 
                                 className="tiny ui button">Publish</button>
                     </div>

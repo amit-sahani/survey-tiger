@@ -4,11 +4,11 @@ import React from 'react';
 class LandingPage extends React.Component {
 
     goToCreatePage = () =>{
-        this.props.changeSurvey(true)
+        this.props.changeSurvey(true,true)
     }
 
     goToTakePage = () => {
-        this.props.changeSurvey(false)
+        this.props.changeSurvey(true,false)
     }
 
     render(){

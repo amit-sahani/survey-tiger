@@ -14,9 +14,9 @@ class App extends React.Component{
         this.setState({question:questions, survey:false})
     }
 
-    changeSurvey = (val) => {
+    changeSurvey = (sur=true, val) => {
         console.log("val=>",val)
-        this.setState({survey:true, createOrTake:val})
+        this.setState({survey:sur, createOrTake:val})
     }
 
     render(){
@@ -31,7 +31,7 @@ class App extends React.Component{
                                 <LandingPage changeSurvey={this.changeSurvey} /> :
                                 this.state.createOrTake ?
                                     <CreateSurvey getQuestions={this.getQuestions} questions={this.state.question}/>:
-                                    <TakeSurvey questions={this.state.question} />
+                                    <TakeSurvey  changeSurvey={this.changeSurvey} questions={this.state.question} />
                                     
                                 
                             }

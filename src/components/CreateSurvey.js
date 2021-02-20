@@ -1,10 +1,11 @@
 import React from 'react';
 import QuestionsAndAnswers from './QuestionsAndAnswers';
 import Questions from './QuestionsAndAnswers';
+import TakeSurvey from './TakeSurvey';
 
 class CreateSurvey extends React.Component{
 
-    state = {open:false, selected:"Select Question Type"}
+    state = {open:false, selected:"Select Question Type", shouldPublish:false}
 
     questionId=0;
     questions=[]
@@ -18,18 +19,25 @@ class CreateSurvey extends React.Component{
 
     setQuestions = (question, publish) => {
         // this.questionId = this.questionId + 1;
-        this.questions.push({question, questionType: this.state.selected})
-        if(publish){
-            console.log("create => ", this.questions)
-            this.props.getQuestions(this.questions)
+       if(question){ 
+           this.questions.push({question, questionType: this.state.selected})
+            if(publish){
+                this.setState({shouldPublish:true})
+                console.log("create => ", this.questions)
+                // this.props.getQuestions(this.questions)
+            }
         }
+    }
+
+    publishConfirmed = () => {
+        this.props.getQuestions(this.questions)
     }
 
 
     render(){
         return (
                 <div>
-                    <div className="dropdown">
+                    {!this.state.shouldPublish?<> <div className="dropdown">
                             <div onClick={()=>{
                             this.setState({open: !(this.state.open)})}} className={`graydiv ui selection dropdown ${this.state.open ? 'visible active' :''}`}>
                             <i className="dropdown icon"></i>
@@ -62,6 +70,7 @@ class CreateSurvey extends React.Component{
                         }
 
                     </div>
+                    </>:<TakeSurvey publishConfirmed={this.publishConfirmed} questions={this.questions}/>}
                 </div>
         );
     }
