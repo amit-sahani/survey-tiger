@@ -3,19 +3,23 @@ import React from 'react';
 
 class LandingPage extends React.Component {
 
-    state = {questions:[]}
+    goToCreatePage = () =>{
+        this.props.changeSurvey(true)
+    }
 
-    getQuestions = (questions) =>{
-        this.setState({questions:questions})
-    }    
+    goToTakePage = () => {
+        this.props.changeSurvey(false)
+    }
 
     render(){
         return (    <div>
-                        <div getQuestions = {this.getQuestions} 
+                        <div onClick={this.goToCreatePage}
                              className="survey-button text-center">
                             Create Survey
                         </div>
-                        <div className="survey-button">
+                        <div 
+                            onClick={this.goToTakePage}
+                            className="survey-button">
                             Take Survey
                         </div>
                     </div>

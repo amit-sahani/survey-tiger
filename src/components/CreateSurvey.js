@@ -12,14 +12,17 @@ class CreateSurvey extends React.Component{
     onSelectedChange(selected){
         console.log(selected.trim());
         this.setState({selected:selected.trim()});
-        console.log(this.questions)
+        
     }
 
 
     setQuestions = (question, publish) => {
-        this.questionId = this.questionId + 1;
-        this.questions.push({[this.questionId]:question, questionType: this.state.selected})
-        
+        // this.questionId = this.questionId + 1;
+        this.questions.push({question, questionType: this.state.selected})
+        if(publish){
+            console.log("create => ", this.questions)
+            this.props.getQuestions(this.questions)
+        }
     }
 
 

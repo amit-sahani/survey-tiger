@@ -7,7 +7,6 @@ class QuestionsAndAnswers extends React.Component{
     id = 1;
 
     incrementHandler = () => {
-        console.log("add")
         this.id = this.id +1 ;
         if(this.props.selected == "Multi-select" && this.id<=4){
             this.setState({answers: {...this.state.answers, [this.id]:""}})
@@ -24,7 +23,6 @@ class QuestionsAndAnswers extends React.Component{
 
     onInputChange = (e) => {
         const key = e.target.accessKey
-        console.log("jai ho", key)
         this.setState({answers: {...this.state.answers, [key]:e.target.value}})
     }
 
