@@ -2,14 +2,22 @@ import React from 'react';
 
 class QuestionsAndAnswers extends React.Component{
 
-    state = {question:"", answers:{1:""}, add:false, publish:false}
+    state = {question:"", answers:{1:""}, addNpublish:false, add: false, publish:false}
 
     id = 1;
 
     incrementHandler = () => {
+        console.log("add")
         this.id = this.id +1 ;
-        if(this.id<=4){
+        if(this.props.selected == "Multi-select" && this.id<=4){
             this.setState({answers: {...this.state.answers, [this.id]:""}})
+            }
+        if(this.props.selected == "Single select" && this.id<=2){
+            this.setState({answers: {...this.state.answers, [this.id]:""}})
+        }
+        if((this.props.selected == "Multi-select" && this.id==4) ||(this.props.selected == "Single select" && this.id==2)){
+            this.setState({addNpublish: true})
+            this.id=1;
         }
 
     }
@@ -25,10 +33,15 @@ class QuestionsAndAnswers extends React.Component{
     }
 
     submitQuestion = (e)=> {
-        e.prevenDefault();
+        e.preventDefault();
         if(this.state.add){
             this.props.setQuestions({question:this.state.question, answers: this.state.answers})
+            this.setState({question:"", answers:{1:""}, addNpublish:false, add: false})
+        }else if(this.state.publish){
+            this.props.setQuestions({question:this.state.question, answers: this.state.answers}, this.state.publish)
+            this.setState({question:"", answers:{1:""}, addNpublish:false, publish: false})
         }
+        
     }
 
     render(){
@@ -48,12 +61,13 @@ class QuestionsAndAnswers extends React.Component{
                     </div>
                     <span style={{float:"left", margin:"10px 0px"}}>Options</span>
                     <div>
-                    {(Object.keys(this.state.answers)).map((key) => {return (<div key ={key} className="input-group">
+                    {(Object.keys(this.state.answers)).map((key) => {return (<div key ={key} 
+                        className={`input-group`}>
                         <input accessKey ={key} type="text" className="form-control" value = {ans[key]} 
                             onChange={this.onInputChange} 
                             aria-label="Amount (to the nearest dollar)" />
                         <div className="input-group-append">
-                            <span key ={key} onClick={this.incrementHandler} className="input-group-text">+</span>
+                            <span key ={key} onClick={this.incrementHandler} className={`input-group-text ${this.state.addNpublish?"disable":""}`}>+</span>
                             <span className="input-group-text">-</span>
                         </div>
                     </div>  )
@@ -61,9 +75,15 @@ class QuestionsAndAnswers extends React.Component{
                     )
                     }
                     </div>
-                    <div style={{ float: "right" }}>
-                        <button type='submit' onClick ={() => {this.setState({add:true})}} className="tiny ui button">Add Question</button>
-                        <button type='submit' onClick ={() => {this.setState({publish:true})}} className="tiny ui button">Publish</button>
+                    <div className={this.state.addNpublish?"":"hide"}style={{ float: "right" }}>
+                        <button type='submit' 
+                                onClick ={() => {
+                                                this.setState({add:true})
+                                            }} 
+                                className="tiny ui button">Add Question</button>
+                        <button type='submit' 
+                                onClick ={() => {this.setState({publish:true})}} 
+                                className="tiny ui button">Publish</button>
                     </div>
                 </form>
             </div>

@@ -3,9 +3,16 @@ import React from 'react';
 
 class LandingPage extends React.Component {
 
+    state = {questions:[]}
+
+    getQuestions = (questions) =>{
+        this.setState({questions:questions})
+    }    
+
     render(){
         return (    <div>
-                        <div className="survey-button text-center">
+                        <div getQuestions = {this.getQuestions} 
+                             className="survey-button text-center">
                             Create Survey
                         </div>
                         <div className="survey-button">

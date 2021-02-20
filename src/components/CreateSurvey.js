@@ -4,20 +4,22 @@ import Questions from './QuestionsAndAnswers';
 
 class CreateSurvey extends React.Component{
 
-    state = {open:false, selected:"Select Question Type", question:[]}
+    state = {open:false, selected:"Select Question Type"}
 
     questionId=0;
+    questions=[]
 
     onSelectedChange(selected){
         console.log(selected.trim());
         this.setState({selected:selected.trim()});
-        console.log(this.state.question)
+        console.log(this.questions)
     }
 
-    setQuestions = (question) => {
+
+    setQuestions = (question, publish) => {
         this.questionId = this.questionId + 1;
-        this.setState({question: [ ...question ,{[this.questionId]:question}]})
-        console.log(this.state.questions)
+        this.questions.push({[this.questionId]:question, questionType: this.state.selected})
+        
     }
 
 
@@ -51,7 +53,7 @@ class CreateSurvey extends React.Component{
                     <div>
                         { (this.state.selected != "Select Question Type") ?
                             <div>
-                                <QuestionsAndAnswers setQuestions = {this.setQuestions}/>
+                                <QuestionsAndAnswers selected={this.state.selected} setQuestions = {this.setQuestions}/>
                             </div>
                             :null
                         }
