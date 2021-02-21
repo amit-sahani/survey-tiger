@@ -16,7 +16,7 @@ class QuestionsAndAnswers extends React.Component{
         }
         if((this.props.selected == "Multi-select" && this.id==4) ||(this.props.selected == "Single select" && this.id==2)){
             this.setState({addNpublish: true})
-            this.id=1;
+            //this.id=1;
         }
 
     }
@@ -25,11 +25,14 @@ class QuestionsAndAnswers extends React.Component{
         
         if(e.target.accessKey>1){const row = parseInt(e.target.accessKey);
         const ans = this.state.answers;
+        console.log(ans)
         delete ans[row]
-        this.id = this.id-1
-        this.setState({answers:ans})
+        
+        this.setState({answers:{...ans}})
+        console.log(ans)
         this.setState({addNpublish: false})
     }
+    this.id = this.id-1
     }
 
     onInputChange = (e) => {
@@ -46,6 +49,7 @@ class QuestionsAndAnswers extends React.Component{
         if(this.state.add){
             this.props.setQuestions({question:this.state.question, answers: this.state.answers})
             this.setState({question:"", answers:{1:""}, addNpublish:false, add: false})
+            this.id = 1;
         }else if(this.state.publish){
             this.props.setQuestions({question:this.state.question, answers: this.state.answers}, this.state.publish)
             this.setState({question:"", answers:{1:""}, addNpublish:false, publish: false})
